@@ -1,0 +1,24 @@
+{
+  "name": "dommy",
+  "version": "0.1.0",
+  "description": "A set of patched DOM apis to confine DOM operations to specific boundaries",
+  "main": "dist/lib.js",
+  "author": "Dejan-Mihai Gitin",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "rm -rf ./dist && tsc && rollup -c ./rollup.config.js",
+    "test": "yarn karma start --single-run"
+  },
+  "devDependencies": {
+    "jasmine-core": "^3.10.1",
+    "karma": "^6.3.9",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^4.0.1",
+    "karma-rollup": "^1.0.1",
+    "rollup": "^2.60.1",
+    "tachometer": "^0.5.10",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {}
+}

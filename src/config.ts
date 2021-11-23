@@ -1,0 +1,1 @@
+export const KEY_ATTR_NAME = '_key_';
