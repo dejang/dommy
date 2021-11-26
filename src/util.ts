@@ -15,4 +15,4 @@ export const rawNextSibling = getOwnPropertyDescriptor(Node.prototype, 'nextSibl
 export const rawParentElement = getOwnPropertyDescriptor(Node.prototype, 'parentElement')!.get!;
 export const rawParentNode = getOwnPropertyDescriptor(Node.prototype, 'parentNode')!.get!;
 export const rawPreviousSibling = getOwnPropertyDescriptor(Node.prototype, 'previousSibling')!.get!;
-export const rawTextContent = getOwnPropertyDescriptor(Node.prototype, 'rawTextContent')!.get!;
+export const rawTextContent = getOwnPropertyDescriptor(Node.prototype, 'textContent')!.get!;
