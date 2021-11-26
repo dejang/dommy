@@ -1,5 +1,5 @@
 import { KEY_ATTR_NAME } from "./config";
-import { apply, rawChildNodes, rawGetAttribute, rawSetAttribute } from "./util";
+import { apply, rawChildNodes, rawGetAttribute, rawParentNode, rawSetAttribute } from "./util";
 export function parseSelector(selector, key) {
     return `${selector}[${KEY_ATTR_NAME}=${key}]`;
 }
@@ -8,6 +8,21 @@ export function markNode(node, key) {
 }
 export function hasKey(node, key) {
     return apply(rawGetAttribute, node, [KEY_ATTR_NAME]) === key;
+}
+export function getKey(node) {
+    return apply(rawGetAttribute, node, [KEY_ATTR_NAME]);
+}
+export function getKeyFromNodeOrParent(node) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+        return apply(rawGetAttribute, node, [KEY_ATTR_NAME]);
+    }
+    else {
+        const parent = apply(rawParentNode, node, []);
+        if (parent) {
+            return apply(rawGetAttribute, parent, [KEY_ATTR_NAME]);
+        }
+    }
+    return null;
 }
 export function scanAndExecute(root, callback) {
     if (!root)

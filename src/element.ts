@@ -1,0 +1,17 @@
+// childElementCount
+// children
+// firstElementChild
+// innerHTML
+// lastElementChild
+// outerHTML
+// previousElementSibling
+// closest
+// getElementsByClassName
+// getElementsByTagName
+// getElementsByTagNameNS
+// insertAdjacentHTML
+// querySelector
+// querySelectorAll
+// replaceChildren
+// replaceWith
+// setHTML
