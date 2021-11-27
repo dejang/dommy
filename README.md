@@ -1,2 +1,2 @@
 # dommy
-[![dommy](https://circleci.com/gh/dommy/dommy.svg?style=svg)](<https://github.com/dejang/dommy>)
+[![Build Status](https://circleci.com/gh/dejang/dommy.svg?style=shield)](https://circleci.com/gh/dejang/dommy.svg?style=shield)
