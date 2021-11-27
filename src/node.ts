@@ -184,6 +184,36 @@ export function previousSibling(this: Node): Node | null {
     return found;
 }
 // textContent
+/**
+ * 
+ * Returns the text content based on the key of the element.
+ */
+export function textContent(this: Node): string {
+    if (this.nodeType === Node.TEXT_NODE) {
+        return apply(rawTextContent, this, []);
+    }
+
+    const immediateChildren = apply(childNodes, this, []);
+    const fragment = new DocumentFragment();
+    const queue = [[immediateChildren, fragment]];
+
+    while (queue.length > 0) {
+        const [children, parent] = queue.shift() as Array<any>;
+        for (let i = 0, len = children.length; i < len; i++) {
+            const rawChild = children[i];
+            const cloneChild = rawChild.cloneNode();
+            parent.appendChild(cloneChild);
+            if (rawChild.nodeType !== Node.TEXT_NODE) {
+                const rawChildren = apply(childNodes, rawChild, []);
+                if (rawChildren.length > 0) {
+                    queue.push([rawChildren, cloneChild]);
+                }
+            }
+        }
+    }
+
+    return apply(rawTextContent, fragment, []);
+}
 // hasChildNodes
 /**
  * 

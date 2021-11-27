@@ -7,6 +7,7 @@ import {
     nextSibling,
     parentElement,
     previousSibling,
+    textContent,
 } from '../dist/lib'
 import { apply } from '../dist/util';
 import { KEY_ATTR_NAME } from '../dist/config';
@@ -110,4 +111,26 @@ it('hasChildNodes', () => {
     expect(apply(hasChildNodes, el, [])).toBe(false);
     el.setAttribute(KEY_ATTR_NAME, 'foo');
     expect(apply(hasChildNodes, el, [])).toBe(true);
+});
+
+it('textContent', () => {
+    let text = apply(textContent, el, []);
+    expect(text).toBe('this text');
+
+    el.innerHTML = `<div ${KEY_ATTR_NAME}="bar">bar</div><div ${KEY_ATTR_NAME}="foo">first<div ${KEY_ATTR_NAME}="bar">second</div></div>textNode`;
+    text = apply(textContent, el, []);
+    expect(text).toBe('firsttextNode');
+
+    el.setAttribute(KEY_ATTR_NAME, 'bar');
+    text = apply(textContent, el, []);
+    expect(text).toBe('bartextNode');
+
+    el.setAttribute(KEY_ATTR_NAME, 'baz');
+    text = apply(textContent, el, []);
+    expect(text).toBe('textNode');
+
+    el.innerHTML = `<div ${KEY_ATTR_NAME}="baz">baz<div ${KEY_ATTR_NAME}="baz">bar<div ${KEY_ATTR_NAME}="bar">foo</div></div></div>`;
+
+    text = apply(textContent, el, []);
+    expect(text).toBe('bazbar');
 });

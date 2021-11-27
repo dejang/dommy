@@ -6,7 +6,7 @@ const rawNextSibling = getOwnPropertyDescriptor(Node.prototype, 'nextSibling').g
 const rawParentElement = getOwnPropertyDescriptor(Node.prototype, 'parentElement').get;
 const rawParentNode = getOwnPropertyDescriptor(Node.prototype, 'parentNode').get;
 const rawPreviousSibling = getOwnPropertyDescriptor(Node.prototype, 'previousSibling').get;
-getOwnPropertyDescriptor(Node.prototype, 'rawTextContent').get;
+const rawTextContent = getOwnPropertyDescriptor(Node.prototype, 'textContent').get;
 
 const KEY_ATTR_NAME = '_key_';
 
@@ -204,6 +204,29 @@ function previousSibling() {
     return found;
 }
 // textContent
+function textContent() {
+    if (this.nodeType === Node.TEXT_NODE) {
+        return apply(rawTextContent, this, []);
+    }
+    const immediateChildren = apply(childNodes, this, []);
+    const fragment = new DocumentFragment();
+    const queue = [[immediateChildren, fragment]];
+    while (queue.length > 0) {
+        const [children, parent] = queue.shift();
+        for (let i = 0, len = children.length; i < len; i++) {
+            const rawChild = children[i];
+            const cloneChild = rawChild.cloneNode();
+            parent.appendChild(cloneChild);
+            if (rawChild.nodeType !== Node.TEXT_NODE) {
+                const rawChildren = apply(childNodes, rawChild, []);
+                if (rawChildren.length > 0) {
+                    queue.push([rawChildren, cloneChild]);
+                }
+            }
+        }
+    }
+    return apply(rawTextContent, fragment, []);
+}
 // hasChildNodes
 /**
  *
@@ -226,4 +249,4 @@ function hasChildNodes() {
     return false;
 }
 
-export { childNodes, factoryCreateElement, firstChild, getKey, getKeyFromNodeOrParent, hasChildNodes, hasKey, lastChild, markNode, nextSibling, parentElement, parseSelector, previousSibling, scanAndExecute };
+export { childNodes, factoryCreateElement, firstChild, getKey, getKeyFromNodeOrParent, hasChildNodes, hasKey, lastChild, markNode, nextSibling, parentElement, parseSelector, previousSibling, scanAndExecute, textContent };

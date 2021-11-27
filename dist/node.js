@@ -1,5 +1,5 @@
 import { getKey, getKeyFromNodeOrParent, hasKey, } from "./isolation";
-import { apply, rawChildNodes, rawNextSibling, rawParentElement, rawParentNode, rawPreviousSibling, } from "./util";
+import { apply, rawChildNodes, rawNextSibling, rawParentElement, rawParentNode, rawPreviousSibling, rawTextContent, } from "./util";
 /**
  * Returns the childNodes as an Array instead of a Live NodeList.
  * The Array will contain all childNodes that are accessible for the current key.
@@ -149,6 +149,29 @@ export function previousSibling() {
     return found;
 }
 // textContent
+export function textContent() {
+    if (this.nodeType === Node.TEXT_NODE) {
+        return apply(rawTextContent, this, []);
+    }
+    const immediateChildren = apply(childNodes, this, []);
+    const fragment = new DocumentFragment();
+    const queue = [[immediateChildren, fragment]];
+    while (queue.length > 0) {
+        const [children, parent] = queue.shift();
+        for (let i = 0, len = children.length; i < len; i++) {
+            const rawChild = children[i];
+            const cloneChild = rawChild.cloneNode();
+            parent.appendChild(cloneChild);
+            if (rawChild.nodeType !== Node.TEXT_NODE) {
+                const rawChildren = apply(childNodes, rawChild, []);
+                if (rawChildren.length > 0) {
+                    queue.push([rawChildren, cloneChild]);
+                }
+            }
+        }
+    }
+    return apply(rawTextContent, fragment, []);
+}
 // hasChildNodes
 /**
  *
