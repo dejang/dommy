@@ -124,7 +124,6 @@ function lastChild() {
     }
     return lastChild;
 }
-// nextSibling
 /**
  * Returns the next sibling. If the sibling is a text node it will return it only if
  * the parent has the same key otherwise it will keep scanning for element siblings that match the key.
@@ -152,7 +151,6 @@ function nextSibling() {
     }
     return found;
 }
-// parentElement
 /**
  *
  * Return the parent element of the current node that matches the same key.
@@ -175,7 +173,13 @@ function parentElement() {
     return parentElement;
 }
 // parentNode
-// previousSibling
+/**
+ *
+ * Returns the parent node of the element based on key.
+ */
+function parentNode() {
+    return null;
+}
 /**
  *
  * Returns the previous sibling of a node. For nodes that are node elements we compare with parent key.
@@ -203,7 +207,10 @@ function previousSibling() {
     }
     return found;
 }
-// textContent
+/**
+ *
+ * Returns the text content based on the key of the element.
+ */
 function textContent() {
     if (this.nodeType === Node.TEXT_NODE) {
         return apply(rawTextContent, this, []);
@@ -227,7 +234,6 @@ function textContent() {
     }
     return apply(rawTextContent, fragment, []);
 }
-// hasChildNodes
 /**
  *
  * Returns true or false if the node has children.
@@ -249,4 +255,4 @@ function hasChildNodes() {
     return false;
 }
 
-export { childNodes, factoryCreateElement, firstChild, getKey, getKeyFromNodeOrParent, hasChildNodes, hasKey, lastChild, markNode, nextSibling, parentElement, parseSelector, previousSibling, scanAndExecute, textContent };
+export { childNodes, factoryCreateElement, firstChild, getKey, getKeyFromNodeOrParent, hasChildNodes, hasKey, lastChild, markNode, nextSibling, parentElement, parentNode, parseSelector, previousSibling, scanAndExecute, textContent };

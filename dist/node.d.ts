@@ -25,9 +25,18 @@ export declare function nextSibling(this: Node): Node | null;
 export declare function parentElement(this: Node): Node | null;
 /**
  *
+ * Returns the parent node of the element based on key.
+ */
+export declare function parentNode(this: Node): Node | null;
+/**
+ *
  * Returns the previous sibling of a node. For nodes that are node elements we compare with parent key.
  */
 export declare function previousSibling(this: Node): Node | null;
+/**
+ *
+ * Returns the text content based on the key of the element.
+ */
 export declare function textContent(this: Node): string;
 /**
  *
