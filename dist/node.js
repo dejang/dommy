@@ -123,7 +123,15 @@ export function parentElement() {
  * Returns the parent node of the element based on key.
  */
 export function parentNode() {
-    return null;
+    let parentNode = apply(rawParentNode, this, []);
+    const key = getKeyFromNodeOrParent(this);
+    while (parentNode !== null) {
+        if (hasKey(parentNode, key)) {
+            break;
+        }
+        parentNode = apply(rawParentNode, parentNode, []);
+    }
+    return parentNode;
 }
 /**
  *

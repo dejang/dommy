@@ -6,6 +6,7 @@ import {
     hasKey,
     nextSibling,
     parentElement,
+    parentNode,
     previousSibling,
     textContent,
 } from '../dist/lib'
@@ -133,4 +134,22 @@ it('textContent', () => {
 
     text = apply(textContent, el, []);
     expect(text).toBe('bazbar');
+});
+
+it('parentNode', () => {
+    el.setAttribute(KEY_ATTR_NAME, 'foo');
+    el.setAttribute('id', 'thisparent');
+    const children = el.childNodes;
+
+    let child = children[0];
+    let parent = apply(parentNode, child, []);
+    expect(parent).toBe(null);
+
+    child = children[1];
+    parent = apply(parentNode, child, []);
+    expect(parent.id).toBe('thisparent');
+
+    child = children[2];
+    parent = apply(parentNode, child, []);
+    expect(parent.id).toBe('thisparent');
 });
